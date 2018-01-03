@@ -164,8 +164,7 @@ defmodule Poker.Hand do
       |> Enum.reverse()
       |> Enum.unzip()
 
-    {ranks, _} = frequencies
-    straight = straight?(ranks)
+    straight = straight?(frequencies)
     flush = flush?(cards)
 
     case frequencies do
@@ -184,19 +183,18 @@ defmodule Poker.Hand do
   end
 
   defp compute_scores(cards) do
-    Enum.reduce(cards, %{}, fn <<rank, _>>, acc ->
+    Enum.reduce cards, %{}, fn <<rank, _>>, acc ->
       {_, acc} =
-        Map.get_and_update(acc, card_value(rank), fn curr ->
+        Map.get_and_update acc, card_value(rank), fn curr ->
           {curr, (curr || 0) + 1}
-        end)
+        end
 
       acc
-    end)
+    end
   end
 
-  defp flush?([<<_, suit>> | _] = cards) do
-    Enum.all?(cards, fn <<_, cardsuit>> -> cardsuit == suit end)
-  end
+  defp flush?([<<_, suit>> | _] = cards),
+    do: Enum.all?(cards, fn <<_, cardsuit>> -> cardsuit == suit end)
 
-  defp straight?([first | rest]), do: first - List.last(rest) == 4
+  defp straight?({[first | rest], _}), do: first - List.last(rest) == 4
 end
