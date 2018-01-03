@@ -10,7 +10,7 @@ defmodule Poker.Hand do
     high_card:       {"high card",       [1, 1, 1, 1, 1]},
     pair:            {"pair",            [2, 1, 1, 1]},
     two_pairs:       {"two pairs",       [2, 2, 1]},
-    three_of_a_kind: {"htree of a kind", [3, 1, 1]},
+    three_of_a_kind: {"three of a kind", [3, 1, 1]},
     straight:        {"straight",        [3, 1, 1, 1]},
     flush:           {"flush",           [3, 1, 1, 2]},
     full_house:      {"full house",      [3, 2]},

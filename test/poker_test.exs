@@ -100,6 +100,32 @@ defmodule PokerTest do
       "Tie"
   end
 
+  test "compare order", %{cards: cards} do
+    assert subject(Red: cards[:straight_flush], Blue: cards[:four_of_a_kind]) ==
+      "Red wins - straight flush"
+
+    assert subject(White: cards[:four_of_a_kind], Black: cards[:full_house]) ==
+      "White wins - four of a kind"
+
+    assert subject(White: cards[:full_house], Black: cards[:flush]) ==
+      "White wins - full house"
+
+    assert subject(White: cards[:flush], Black: cards[:straight]) ==
+      "White wins - flush"
+
+    assert subject(White: cards[:straight], Black: cards[:three_of_a_kind]) ==
+      "White wins - straight"
+
+    assert subject(White: cards[:three_of_a_kind], Black: cards[:two_pairs]) ==
+      "White wins - three of a kind"
+
+    assert subject(White: cards[:two_pairs], Black: cards[:pair]) ==
+      "White wins - two pairs"
+
+    assert subject(White: cards[:pair], Black: cards[:high_card]) ==
+      "White wins - pair"
+  end
+
   test "compare one player supplied", %{cards: cards} do
     assert subject(White: cards[:pair]) == "White wins - pair"
   end
