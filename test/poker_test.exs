@@ -99,4 +99,12 @@ defmodule PokerTest do
     assert subject(White: cards[:high_card], Black: "2H 3D 4C 8H JD") ==
       "Tie"
   end
+
+  test "compare one player supplied", %{cards: cards} do
+    assert subject(White: cards[:pair]) == "White wins - pair"
+  end
+
+  test "compare when no players supplied" do
+    assert subject([]) == "Tie"
+  end
 end

@@ -26,9 +26,9 @@ defmodule Poker.Hand do
 
   for {symbol, {pair_name, ranks}} <- @combinations do
     if symbol != :high_card do
-      defp format({_, unquote(ranks)}), do: unquote(pair_name)
+      def format({_, unquote(ranks)}), do: unquote(pair_name)
     else
-      defp format({[card | _], unquote(ranks)}),
+      def format({[card | _], unquote(ranks)}),
         do: "#{ unquote(pair_name) }: #{card_name(card)}"
     end
 
@@ -69,6 +69,7 @@ defmodule Poker.Hand do
     the higher card if both hands have the same ranks.
 
     Implies that higher hand is specified as the first argument
+    TODO extract this function into different module probably Game or Poker
 
     ## Examples
         # tie
@@ -87,6 +88,9 @@ defmodule Poker.Hand do
         iex> Poker.Hand.wins({[8, 10], [4, 1]}, {[8, 6], [4, 1]})
         "high card: Queen"
   """
+  def wins(hand),
+    do: format(hand)
+
   def wins(ahand, bhand) when ahand == bhand,
     do: :tie
 

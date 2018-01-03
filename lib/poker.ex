@@ -33,7 +33,13 @@ defmodule Poker do
     {:error, "List of players must be supplied"}
   end
 
-  def determine_winner([{player, acards}, {_, bcards} | _]) do
+  defp determine_winner([]),
+    do: "Tie"
+
+  defp determine_winner([{player, hand}]),
+    do: "#{ player } wins - #{ Hand.wins(hand) }"
+
+  defp determine_winner([{player, acards}, {_, bcards} | _]) do
     case Hand.wins(acards, bcards) do
       :tie -> "Tie"
       reason -> "#{ player } wins - #{ reason }"
