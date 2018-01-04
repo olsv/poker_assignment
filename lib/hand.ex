@@ -68,14 +68,7 @@ defmodule Poker.Hand do
     Supplementary function that determines the winning combination or
     the higher card if both hands have the same ranks.
 
-    Implies that higher hand is specified as the first argument
-    TODO extract this function into different module probably Game or Poker
-
     ## Examples
-        # tie
-        iex> Poker.Hand.wins({[8, 7, 6], [2, 2, 1]}, {[8, 7, 6], [2, 2, 1]})
-        :tie
-
         # higher score
         iex> Poker.Hand.wins({[8, 7], [4, 1]}, {[10, 9, 8], [3, 1, 1]})
         "four of a kind"
@@ -91,8 +84,8 @@ defmodule Poker.Hand do
   def wins(hand),
     do: format(hand)
 
-  def wins(ahand, bhand) when ahand == bhand,
-    do: :tie
+  def wins({_, ascores} = ahand, {_, bscores} = bhand) when ascores < bscores,
+    do: wins(bhand, ahand)
 
   def wins({_, ascores} = hand, {_, bscores}) when ascores > bscores,
     do: format(hand)

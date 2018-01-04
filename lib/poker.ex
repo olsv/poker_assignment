@@ -39,12 +39,11 @@ defmodule Poker do
   defp determine_winner([{player, hand}]),
     do: "#{ player } wins - #{ Hand.wins(hand) }"
 
-  defp determine_winner([{player, acards}, {_, bcards} | _]) do
-    case Hand.wins(acards, bcards) do
-      :tie -> "Tie"
-      reason -> "#{ player } wins - #{ reason }"
-    end
-  end
+  defp determine_winner([{_, ahand}, {_, bhand} | _]) when ahand == bhand,
+    do: "Tie"
+
+  defp determine_winner([{player, ahand}, {_, bhand} | _]),
+    do: "#{ player } wins - #{ Hand.wins(ahand, bhand) }"
 
   defp compute_scores(players) do
     Enum.map players, fn  {player, cards} ->
